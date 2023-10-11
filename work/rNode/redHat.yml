@@ -33,13 +33,13 @@
       action: yum name='wget' state=installed
     - name: Download tomcat 10
       ansible.builtin.get_url:
-          url: https://downloads.apache.org/tomcat/tomcat-9/v9.0.64/bin/apache-tomcat-9.0.64.tar.gz
+          url: "https://archive.apache.org/dist/tomcat/tomcat-9/v{{ version_tomcat }}/bin/apache-tomcat-{{ version_tomcat }}.tar.gz"
           dest: /tmp
     - name: Execute the shell command 
-      ansible.builtin.shell: sudo tar -xf /tmp/apache-tomcat-9.0.64.tar.gz -C /opt/tomcat/
+      ansible.builtin.shell: "sudo tar -xf /tmp/apache-tomcat-{{ version_tomcat }}.tar.gz -C /opt/tomcat/"
     - name: Create a symbolic link
       ansible.builtin.file:
-        src: /opt/tomcat/apache-tomcat-9.0.64
+        src: "/opt/tomcat/apache-tomcat-{{ version_tomcat }}"
         dest: /opt/tomcat/latest
         owner: tomcat
         group: tomcat

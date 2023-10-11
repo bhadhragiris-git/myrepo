@@ -50,5 +50,5 @@
         path: /opt/tomcat
         owner: tomcat
         group: tomcat
-        mode: '0644'
+        mode: '0755'
       

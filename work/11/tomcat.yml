@@ -40,7 +40,7 @@
       ansible.builtin.shell: "sudo tar -xf /tmp/apache-tomcat-{{ VERSION }}.tar.gz -C /opt/tomcat/"
     - name: Create a symbolic link
       ansible.builtin.file:
-        src: "apache-tomcat-{{ VERSION }}.tar.gz"
+        src: "/opt/tomcat/apache-tomcat-{{ VERSION }}.tar.gz"
         dest: /opt/tomcat/latest
         owner: tomcat
         group: tomcat

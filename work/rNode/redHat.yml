@@ -36,11 +36,11 @@
           url: "https://archive.apache.org/dist/tomcat/tomcat-9/v{{ version_tomcat }}/bin/apache-tomcat-{{ version_tomcat }}.tar.gz"
           dest: /tmp
     - name: Execute the shell command 
-      ansible.builtin.shell: "sudo tar -xf /tmp/apache-tomcat-{{ version_tomcat }}.tar.gz -C /opt/tomcat/"
+      ansible.builtin.shell: "sudo tar -xf /tmp/apache-tomcat-{{ version_tomcat }}.tar.gz -C /usr/share/"
     - name: Create a symbolic link
       ansible.builtin.file:
-        src: "/opt/tomcat/apache-tomcat-{{ version_tomcat }}"
-        dest: /opt/tomcat/latest
+        src: "/usr/share/apache-tomcat-{{ version_tomcat }}"
+        dest: /usr/share/tomcat
         owner: tomcat
         group: tomcat
         state: link

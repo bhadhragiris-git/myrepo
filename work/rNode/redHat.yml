@@ -10,4 +10,4 @@
     - name: install jdk
       ansible.builtin.dnf:
         name: default-jdk
-        state: latest
+        state: present

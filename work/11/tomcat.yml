@@ -38,4 +38,9 @@
           dest: /tmp
     - name: Execute the shell command 
       ansible.builtin.shell: "sudo tar -xf /tmp/apache-tomcat-{{ VERSION }}.tar.gz -C /opt/tomcat/"
+    - name: Create a symbolic link
+      ansible.builtin.file:
+        src: "/tmp/apache-tomcat-{{ VERSION }}.tar.gz"
+        dest: /opt/tomcat/latest
+        state: link
       

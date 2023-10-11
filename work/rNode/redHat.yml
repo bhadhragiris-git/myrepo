@@ -31,7 +31,7 @@
         - System has groupname as {{ groupname }}
     - name: Download tomcat 10
       ansible.builtin.get_url:
-          url: "wget -c https://downloads.apache.org/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz"
+          url: "https://downloads.apache.org/tomcat/tomcat-9/v{{ version_tomcat }}/bin/apache-tomcat-9.0.34.tar.gz"
           dest: /tmp
     - name: Execute the shell command 
       ansible.builtin.shell: "sudo tar -xf /tmp/apache-tomcat-9.0.34.tar.gz -C /opt/tomcat/"

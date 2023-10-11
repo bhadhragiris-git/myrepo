@@ -30,7 +30,7 @@
         - System has username as {{ username }}
         - System has groupname as {{ groupname }}
     - name: Install wget package (RedHat based)
-        action: yum name='wget' state=installed
+      action: yum name='wget' state=installed
     - name: Download tomcat 10
       ansible.builtin.get_url:
           url: "https://downloads.apache.org/tomcat/tomcat-9/v{{ version_tomcat }}/bin/apache-tomcat-9.0.34.tar.gz"

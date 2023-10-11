@@ -1,11 +1,13 @@
 - name: install tomcat 10
   become: yes
   hosts: appservers
+  java_version: "11"
   vars:
     username: tomcat
     groupname: tomcat
     homedir: /opt/tomcat
     shell: /bin/false
+    java_version: 11
   tasks:
     - name: install jdk
       ansible.builtin.apt:
@@ -23,3 +25,9 @@
         home: "{{ homedir }}"
         create_home: true
         shell: "{{ shell }}"
+    - name: Adding Debug statements
+      ansible.builtin.debug:
+        msg:
+        - System has java-version {{ java_version }}
+        - System has username as {{ username }}
+        - System has groupname as {{ groupname }}

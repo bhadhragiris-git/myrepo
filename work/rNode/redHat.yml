@@ -48,7 +48,7 @@
       ansible.builtin.command: sudo chown -R tomcat:tomcat /usr/share/tomcat
     - name: user execute permissions 
       ansible.builtin.command: "sudo chmod -R 755 /usr/share/apache-tomcat-{{ version_tomcat }}"
-        - name: service file
+    - name: service file
       ansible.builtin.template:
         src: template/tomcat.service.j2
         dest: /etc/systemd/system/tomcat.service

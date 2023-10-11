@@ -42,5 +42,7 @@
       ansible.builtin.file:
         src: "/tmp/apache-tomcat-{{ VERSION }}.tar.gz"
         dest: /opt/tomcat/latest
+        owner: tomcat
+        group: tomcat
         state: link
       

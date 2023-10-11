@@ -12,3 +12,22 @@
         name: java-11-openjdk-devel
         update_cache: yes
         state: present
+    - name: Ensure group "somegroup" exists
+      ansible.builtin.group:
+        name: "{{ groupname }}"
+        state: present
+    - name: create tomcat user
+      ansible.builtin.user:
+        name: "{{ username }}"
+        group: "{{ groupname }}"
+        home: "{{ homedir }}"
+        create_home: true
+        shell: "{{ shell }}"
+    - name: Adding Debug statements
+      ansible.builtin.debug:
+        msg:
+        - System has java-version {{ java_version }}
+        - System has username as {{ username }}
+        - System has groupname as {{ groupname }}
+
+      

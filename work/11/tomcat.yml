@@ -45,4 +45,10 @@
         owner: tomcat
         group: tomcat
         state: link
+    - name: Change file ownership, group and permissions
+      ansible.builtin.file:
+        path: /opt/tomcat
+        owner: tomcat
+        group: tomcat
+        mode: '0644'
       

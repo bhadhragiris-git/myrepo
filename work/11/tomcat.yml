@@ -48,5 +48,5 @@
     - name: Change file ownership, group and permissions
       ansible.builtin.command: "sudo chown -R tomcat:tomcat /opt/tomcat"
     - name: user execute permissions 
-      ansible.builtin.command: sudo chmod -R u+x /opt/tomcat/bin
+      ansible.builtin.command: "sudo chmod -R u+x /opt/tomcat/apache-tomcat-{{ VERSION }}/bin"
       

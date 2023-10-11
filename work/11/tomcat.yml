@@ -7,6 +7,8 @@
     homedir: /opt/tomcat
     shell: /bin/false
     java_version: 11
+    MAJOR_VERSION: 10
+    VERSION: 10.1.14
   tasks:
     - name: install jdk
       ansible.builtin.apt:
@@ -30,3 +32,8 @@
         - System has java-version {{ java_version }}
         - System has username as {{ username }}
         - System has groupname as {{ groupname }}
+    - name: Download tomcat 10
+        ansible.builtin.get_url:
+          url: https://dlcdn.apache.org/tomcat/tomcat-${MAJOR_VERSION}/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz
+          dest: /tmp
+      

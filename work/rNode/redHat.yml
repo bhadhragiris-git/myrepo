@@ -47,7 +47,7 @@
     - name: Change file ownership, group and permissions
       ansible.builtin.command: sudo chown -R tomcat:tomcat /usr/share/tomcat
     - name: user execute permissions 
-      ansible.builtin.command: "sudo chmod -R 755 /usr/share/apache-tomcat-{{ version_tomcat }}"
+      ansible.builtin.command: "sudo chmod -R 755 tomcat:tomcat /usr/share/tomcat/apache-tomcat-{{ version_tomcat }}"
     - name: service file
       ansible.builtin.template:
         src: template/tomcat.service.j2

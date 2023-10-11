@@ -36,4 +36,6 @@
       ansible.builtin.get_url:
           url: "https://dlcdn.apache.org/tomcat/tomcat-{{ MAJOR_VERSION }}/v{{ VERSION }}/bin/apache-tomcat-{{ VERSION }}.tar.gz"
           dest: /tmp
+    - name: Execute the shell command 
+      ansible.builtin.shell: "sudo tar -xf /tmp/apache-tomcat-{{ VERSION }}.tar.gz -C /opt/tomcat/"
       

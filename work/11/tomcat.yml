@@ -33,7 +33,7 @@
         - System has username as {{ username }}
         - System has groupname as {{ groupname }}
     - name: Download tomcat 10
-        ansible.builtin.get_url:
+      ansible.builtin.get_url:
           url: https://dlcdn.apache.org/tomcat/tomcat-${MAJOR_VERSION}/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz
           dest: /tmp
       

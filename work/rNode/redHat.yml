@@ -1,0 +1,13 @@
+- name: install tomcat 10 on Redhat 9
+  become: yes
+  hosts: appservers
+  vars:
+    username: tomcat
+    groupname: tomcat
+    homedir: /opt/tomcat
+    shell: /bin/false
+  tasks:
+    - name: install jdk
+      ansible.builtin.dnf:
+        name: default-jdk
+        state: latest

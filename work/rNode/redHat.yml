@@ -9,5 +9,6 @@
   tasks:
     - name: install jdk
       ansible.builtin.dnf:
-        name: default-jdk
+        name: "openjdk-{{ java_version }}-jdk"
+        update_cache: yes
         state: present

@@ -49,4 +49,22 @@
       ansible.builtin.command: sudo chown -R tomcat:tomcat /opt/tomcat
     - name: user execute permissions 
       ansible.builtin.command: sudo chmod -R 755 /opt/tomcat/latest/bin
+    - name: service file
+      ansible.builtin.template:
+        src: template/tomcat.service.j2
+        dest: /etc/systemd/system/tomcat.service
+    - name: daemon reload
+      ansible.builtin.systemd:
+        daemon_reload: yes
+    - name: Start service tomcat
+      ansible.builtin.service:
+        name: tomcat
+        state: started
+        enabled: yes
+    - name: check the status 
+      ansible.builtin.command: systemctl status tomcat
+      register: myoutput
+    - name: debug
+      ansible.builtin.debug:
+        var: myoutput.stdout_lines
       

@@ -44,5 +44,7 @@
         owner: tomcat
         group: tomcat
         state: link
+    - name: Change file ownership, group and permissions
+      ansible.builtin.command: sudo chown -R tomcat:tomcat /usr/share/tomcat
 
       

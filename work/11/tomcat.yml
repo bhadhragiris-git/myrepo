@@ -6,7 +6,7 @@
     groupname: tomcat
     homedir: /opt/tomcat
     shell: /bin/false
-    java_version: 11
+    #java_version: 11
     MAJOR_VERSION: 10
     VERSION: 10.1.14
   tasks:

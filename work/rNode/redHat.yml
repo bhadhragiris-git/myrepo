@@ -9,7 +9,7 @@
   tasks:
     - name: install jdk
       ansible.builtin.dnf:
-        name: "java-{{ java-version }}-openjdk-devel"
+        name: "java-{{ java_version }}-openjdk-devel"
         update_cache: yes
         state: present
     - name: Ensure group "somegroup" exists

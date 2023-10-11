@@ -1,7 +1,6 @@
 - name: install tomcat 10
   become: yes
   hosts: appservers
-  java_version: "11"
   vars:
     username: tomcat
     groupname: tomcat

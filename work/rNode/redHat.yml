@@ -29,6 +29,7 @@
         - System has java-version {{ java_version }}
         - System has username as {{ username }}
         - System has groupname as {{ groupname }}
+        - System has shell as {{ shell }}
     - name: Install wget package (RedHat based)
       action: yum name='wget' state=installed
     - name: Download tomcat 10

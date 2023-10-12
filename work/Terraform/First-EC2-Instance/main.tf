@@ -5,7 +5,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "my_ec2_example_instance" {
-    ami = "ami-00abfd8da690f984d"  
+    ami = "ami-070493ccb1413949b"  
     instance_type = "t2.micro" 
     tags = {
         Name = "Terraform New EC2 Instance"

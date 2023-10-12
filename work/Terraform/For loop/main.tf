@@ -22,3 +22,7 @@ variable "user_names" {
   type        = set(string)
   default     = ["user1", "user2", "user3"]
 }
+
+output "print_the_names" {
+  value = [for name in var.user_names : name]
+}

@@ -7,13 +7,15 @@
     homedir: /opt/tomcat
     shell: /bin/false
     #java_version: 11
+    tomcat_major_version: 10
+    tomcat_specific_version: 10.1.14
   tasks:
     - name: install jdk
       ansible.builtin.apt:
         name: "openjdk-{{ java_version }}-jdk"
         update_cache: yes
         state: present
-    - name: Ensure group "somegroup" exists
+    - name: Ensure group "tomcat" exists
       ansible.builtin.group:
         name: "{{ groupname }}"
         state: present
@@ -43,10 +45,45 @@
         owner: tomcat
         group: tomcat
         state: link
-    - name: Change file ownership, group and permissions
-      ansible.builtin.command: sudo chown -R tomcat:tomcat /opt/tomcat
-    - name: user execute permissions 
-      ansible.builtin.command: sudo chmod -R 755 /opt/tomcat/latest/bin
+    - name: download and extract tomcat
+      ansible.builtin.unarchive:
+        src: "https://dlcdn.apache.org/tomcat/tomcat-{{ tomcat_major_version }}/v{{ tomcat_specific_version }}/bin/apache-tomcat-{{ tomcat_specific_version }}.tar.gz"
+        creates: "{{ homedir }}/apache-tomcat-{{ tomcat_specific_version }}"
+        dest: "{{ homedir }}"
+        group: "{{ groupname }}"
+        owner: "{{ username }}"
+        remote_src: true
+    - name: Create a symbolic link
+      ansible.builtin.file:
+        src: "{{ homedir }}/apache-tomcat-{{ tomcat_specific_version }}"
+        dest: "{{ homedir }}/latest"
+        owner: "{{ username }}"
+        group: "{{ groupname }}"
+        state: link
+    - name: Recursively change ownership of a directory
+      ansible.builtin.file:
+        path: "{{ homedir }}"
+        state: directory
+        recurse: yes
+        owner: "{{ username }}"
+        group: "{{ groupname }}"
+    - name: get all the shell files
+      ansible.builtin.command: sudo sh -c 'ls /opt/tomcat/latest/bin/*.sh'
+      register: shell_files
+    - name: print the value
+      ansible.builtin.debug:
+        var: shell_files
+    - name: add execute permission
+      ansible.builtin.file:
+        path: "{{ item }}"
+        owner: "{{ username }}"
+        group: "{{ groupname }}"
+        mode: "0751"
+      loop: "{{ shell_files.stdout_lines }}"
+    #- name: Change file ownership, group and permissions
+     # ansible.builtin.command: sudo chown -R tomcat:tomcat /opt/tomcat
+    #- name: user execute permissions 
+    #  ansible.builtin.command: sudo chmod -R 755 /opt/tomcat/latest/bin
     - name: service file
       ansible.builtin.template:
         src: template/tomcat.service.j2

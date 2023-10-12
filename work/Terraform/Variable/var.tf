@@ -1,7 +1,7 @@
 variable "instance_type" {
-   description = "Instance type t2.micro"
+  /** description = "Instance type t2.micro"
    type        = string
-   default     = "t2.micro"
+   default     = "t2.micro"*/
 } 
 
 /*variable "instance_count" {

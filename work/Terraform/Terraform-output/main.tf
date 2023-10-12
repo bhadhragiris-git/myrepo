@@ -13,5 +13,6 @@ resource "aws_instance" "my_ec2_example_instance" {
 }
 
 output "console output" {
-   value = "First EC2 Instance"
+   value = "First EC2 Instance" /* static output */
+   value = aws_instance.my_ec2_example_instance.public_ip /* Dynamic Output */
 }

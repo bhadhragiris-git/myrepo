@@ -1,7 +1,19 @@
- <h2
+  Terraform Version Manager 
+
 - Terraform Version Manager is used to manage different types of Terraform versions
 - first we need to install tfenv as it is not downloaded with terraform install
 - tfenv allows you install different versions of terraform i.e. 1.2.3, 1.2.5
 - if suppose terraform version 1.2.3 is not being used we can switch to the latest version of terraform.
 - tfenv use 1.2.6
-- tfenv --help can be used to see different options. /h2>
+- tfenv --help can be used to see different options.
+
+
+Terraform Import
+
+- terraform import can used write the code of terraform. if already EC2 instance is created in AWS we can 
+  import that EC2 instace and modify the code accordingly.
+- usuage :
+   - terraform import aws_instance.ec2_example i-0808dds8080fs0808dds8080fs
+                      aws_resource_type.resource_name resource_id
+   - terraform import aws_s3_bucket.my_test_bucket my-demo-bucket-in-s3
+   - terraform import aws_s3_bucket_acl.example  my-demo-bucket-in-s3

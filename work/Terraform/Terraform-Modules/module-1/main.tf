@@ -20,6 +20,11 @@ resource "aws_instance" "ec2_example" {
       EOF
 }
 
+output "public_ip_ec2" {
+  value       = aws_instance.app_server.public_ip
+  description = "Public IP address of EC2 instance"
+}
+
 resource "aws_security_group" "main" {
     name        = "EC2-webserver-SG-1"
   description = "Webserver for EC2 Instances"

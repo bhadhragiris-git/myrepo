@@ -3,4 +3,4 @@ environment_type="stage"
 
 
 /* terraform plan -var-file="stage-tfvars" 
-   terraform apply -var-file="stage-tfvars */
+   terraform apply -var-file="production-tfvars */

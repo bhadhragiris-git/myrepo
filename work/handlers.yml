@@ -3,7 +3,7 @@
 - hosts: all
   become: yes
 
-    - name: Update apt cache and install Nginx
+  - name: Update apt cache and install Nginx
       apt:
         name: nginx
         state: latest

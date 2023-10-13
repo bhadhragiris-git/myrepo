@@ -1,0 +1,104 @@
+---
+- name: install tomcat 10
+  become: yes
+  hosts: appservers
+  vars:
+    username: tomcat
+    groupname: tomcat
+    homedir: /opt/tomcat
+    shell: /bin/false
+    tomcat_major_version: 10
+    tomcat_specific_version: 10.1.14
+    java_version: "11"
+    service_file_path: "/etc/systemd/system/tomcat.service"
+  tasks:
+    - name: install jdk
+      ansible.builtin.apt:
+        name: "openjdk-{{ java_version }}-jdk"
+        update_cache: yes
+        state: present
+      when: ansible_facts["os_family"] == "Debian"
+    - name: install jdk 
+      ansible.builtin.yum:
+        name: "java-{{ java_version }}-openjdk"
+        state: present
+      when: ansible_facts["os_family"] == "RedHat"
+    - name: Ensure group "tomcat" exists
+      ansible.builtin.group:
+        name: "{{ groupname }}"
+        state: present
+    - name: create tomcat user
+      ansible.builtin.user:
+        name: "{{ username }}"
+        group: "{{ groupname }}"
+        home: "{{ homedir }}"
+        create_home: true
+        shell: "{{ shell }}"
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: "{{ homedir }}"
+        group: "{{ groupname }}"
+        owner: "{{ username }}"
+        state: directory
+        mode: '0755'
+    - name: download and extract tomcat
+      ansible.builtin.unarchive:
+        src: "https://dlcdn.apache.org/tomcat/tomcat-{{ tomcat_major_version }}/v{{ tomcat_specific_version }}/bin/apache-tomcat-{{ tomcat_specific_version }}.tar.gz"
+        creates: "{{ homedir }}/apache-tomcat-{{ tomcat_specific_version }}"
+        dest: "{{ homedir }}"
+        group: "{{ groupname }}"
+        owner: "{{ username }}"
+        remote_src: true
+      notify:
+        - Create a symbolic link
+    - name: run all the hanlders
+      ansible.builtin.meta: flush_handlers
+    
+    - name: Recursively change ownership of a directory
+      ansible.builtin.file:
+        path: "{{ homedir }}"
+        state: directory
+        recurse: yes
+        owner: "{{ username }}"
+        group: "{{ groupname }}"
+    - name: get all the shell files
+      ansible.builtin.command: sudo sh -c 'ls /opt/tomcat/latest/bin/*.sh'
+      register: shell_files
+    - name: print the value
+      ansible.builtin.debug:
+        var: shell_files
+    - name: add execute permission
+      ansible.builtin.file:
+        path: "{{ item }}"
+        owner: "{{ username }}"
+        group: "{{ groupname }}"
+        mode: "0751"
+      loop: "{{ shell_files.stdout_lines }}"
+    - name: copy tomcat service file 
+      ansible.builtin.template:
+        src: templates/tomcat.j2
+        dest: "{{ service_file_path }}"
+      notify:
+        - restart tomcat
+    - name: ensure tomcat is running
+      ansible.builtin.systemd:
+        name: tomcat
+        state: started
+  handlers:
+    - name: restart tomcat
+      ansible.builtin.systemd:
+        name: tomcat
+        daemon_reload: true
+        enable: true
+        state: started
+    - name: Create a symbolic link
+      ansible.builtin.file:
+        src: "{{ homedir }}/apache-tomcat-{{ tomcat_specific_version }}"
+        dest: "{{ homedir }}/latest"
+        owner: "{{ username }}"
+        group: "{{ groupname }}"
+        state: link
+
+
+
+        

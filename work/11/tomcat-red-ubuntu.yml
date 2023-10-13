@@ -76,7 +76,7 @@
       loop: "{{ shell_files.stdout_lines }}"
     - name: copy tomcat service file 
       ansible.builtin.template:
-        src: templates/tomcat.j2
+        src: template/tomcat.j2
         dest: "{{ service_file_path }}"
       notify:
         - restart tomcat

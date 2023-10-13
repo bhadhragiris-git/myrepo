@@ -4,6 +4,7 @@ variable "instance_type" {
    default     = "t2.micro"*/
 } 
 
+
 /*variable "instance_count" {
   description = "EC2 instance count"
   type        = number

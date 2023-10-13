@@ -1,8 +1,7 @@
  provider "aws" {
    region     = "eu-central-1"
    access_key = "xxxx"
-   secret_key = "xxxx"
-   
+   secret_key = "xxxx"   
 }
 
 locals {
@@ -30,4 +29,6 @@ resource "aws_instance" "ec2_example" {
 
 /* terraform plan -var-file="dev.tfvars" 
    terraform plan -var-file="production.tfvars"
+
+   for destroy also the same as we create. i.e terraform destroy -var-file="dev.tfvars"
 */

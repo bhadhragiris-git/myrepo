@@ -26,10 +26,31 @@ resource "aws_instance" "my_ec2_example_instance" {
 // local storage
 data "terraform_remote_state" "local_state" {
   backend = "local"
+
+  config = {
+    path = "/home/rwagh/terraform/terraform.tfstate"
+  }
+}
+
+# Terraform >= 0.12
+resource "aws_instance" "jhooq-test" {
+  # ...
+  subnet_id = data.terraform_remote_state.local_state.outputs.subnet_id
 }
 
 //remote storage
 
 data "terraform_remote_state" "remote_state" {
   backend = "remote"
+config = {
+    organization = "jhooq"
+    workspaces = {
+      name = "jhooq-test"
+    }
+  }
+}
+
+# Terraform >= 0.12
+resource "aws_instance" "jhooq-test" {
+  subnet_id = data.terraform_remote_state.remote_state.outputs.subnet_id
 }

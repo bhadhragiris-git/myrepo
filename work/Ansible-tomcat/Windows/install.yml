@@ -1,0 +1,15 @@
+---
+- hosts: windows
+  name: learning on windows
+  tasks:
+    - name: install utilities
+      win_chocolatey:
+        name:
+          - googlechrome
+          - vscode
+        state: present
+    - name: install iis
+      win_feature:
+        include_management_tools: yes
+        name: Web-Server
+        state: present
